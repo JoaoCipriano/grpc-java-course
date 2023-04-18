@@ -1,15 +1,41 @@
 package com.pilgrim.protobuf;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.pilgrim.json.JPerson;
+import com.pilgrim.model.Person;
+
 public class PerformanceTest {
 
     public static void main(String[] args) {
 
         //json
-        Runnable runnable1;
+        JPerson person1 = new JPerson();
+        person1.setName("John");
+        person1.setAge(20);
+        ObjectMapper mapper = new ObjectMapper();
+        Runnable runnable1 = () -> {
+            try {
+                byte[] bytes = mapper.writeValueAsBytes(person1);
+                mapper.readValue(bytes, JPerson.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
 
         //protobuf
-        Runnable runnable2;
-
+        Person person2 = Person.newBuilder()
+                .setName("John")
+                .setAge(20)
+                .build();
+        Runnable runnable2 = () -> {
+            try {
+                byte[] bytes = person2.toByteArray();
+                Person person = Person.parseFrom(bytes);
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     private static void runPerformanceTest(Runnable runnable, String method) {
