@@ -5,10 +5,14 @@ import com.pilgrim.model.Person;
 public class PersonDemo {
 
     public static void main(String[] args) {
-        Person person = Person.newBuilder()
+        Person person1 = Person.newBuilder()
                 .setName("John")
                 .setAge(20)
                 .build();
-        System.out.println(person);
+        Person person2 = Person.newBuilder()
+                .setName("john")
+                .setAge(20)
+                .build();
+        System.out.println(person1.equals(person2));
     }
 }
