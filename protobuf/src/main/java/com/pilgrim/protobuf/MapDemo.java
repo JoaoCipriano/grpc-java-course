@@ -1,5 +1,6 @@
 package com.pilgrim.protobuf;
 
+import com.pilgrim.model.BodyStyle;
 import com.pilgrim.model.Car;
 import com.pilgrim.model.Dealer;
 
@@ -10,12 +11,14 @@ public class MapDemo {
         Car accord = Car.newBuilder()
                 .setMake("Honda")
                 .setModel("Accord")
+                .setBodyStyle(BodyStyle.COUPE)
                 .setYear(2023)
                 .build();
 
         Car civic = Car.newBuilder()
                 .setMake("Honda")
                 .setModel("Civic")
+                .setBodyStyle(BodyStyle.SEDAN)
                 .setYear(2022)
                 .build();
 
@@ -25,7 +28,7 @@ public class MapDemo {
                 .build();
 
         System.out.println(
-                dealer.getModelMap()
+                dealer.getModelOrThrow(2022).getBodyStyle()
         );
     }
 }
