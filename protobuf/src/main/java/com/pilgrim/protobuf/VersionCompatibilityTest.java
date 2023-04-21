@@ -23,7 +23,7 @@ public class VersionCompatibilityTest {
 //        Files.write(pathV2, television.toByteArray());
 
         //
-        byte[] bytes = Files.readAllBytes(pathV2);
+        byte[] bytes = Files.readAllBytes(pathV1);
         System.out.println(
                 Television.parseFrom(bytes)
         );

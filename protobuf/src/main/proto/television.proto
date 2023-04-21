@@ -16,9 +16,14 @@ option java_package = "com.pilgrim.model";
 //  Type type = 3;
 //}
 
-// v3
+// v4
 message Television {
   string brand = 1;
+
+  reserved 2;
+  reserved "year", "model";
+
+  int32 price = 4;
   Type type = 3;
 }
 
