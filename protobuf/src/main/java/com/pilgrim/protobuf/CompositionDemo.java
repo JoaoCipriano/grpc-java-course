@@ -1,5 +1,6 @@
 package com.pilgrim.protobuf;
 
+import com.google.protobuf.Int32Value;
 import com.pilgrim.model.Address;
 import com.pilgrim.model.Car;
 import com.pilgrim.model.Person;
@@ -34,11 +35,11 @@ public class CompositionDemo {
 
         Person person = Person.newBuilder()
                 .setName("John")
-                .setAge(20)
+                .setAge(Int32Value.newBuilder().setValue(20).build())
                 .setAddress(address)
                 .addAllCar(cars)
                 .build();
 
-        System.out.println(person);
+        System.out.println(person.hasAge());
     }
 }

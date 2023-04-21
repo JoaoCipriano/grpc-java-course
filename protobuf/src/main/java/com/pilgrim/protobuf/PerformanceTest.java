@@ -1,6 +1,7 @@
 package com.pilgrim.protobuf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.protobuf.Int32Value;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.pilgrim.json.JPerson;
 import com.pilgrim.model.Person;
@@ -26,7 +27,7 @@ public class PerformanceTest {
         //protobuf
         Person person2 = Person.newBuilder()
                 .setName("John")
-                .setAge(20)
+                .setAge(Int32Value.newBuilder().setValue(20).build())
                 .build();
         Runnable proto = () -> {
             try {
