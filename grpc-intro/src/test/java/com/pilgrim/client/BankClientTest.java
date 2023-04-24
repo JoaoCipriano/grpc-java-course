@@ -26,12 +26,12 @@ class BankClientTest {
     @Test
     void balanceTest() {
         BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
-                .setAccountNumber(5)
+                .setAccountNumber(7)
                 .build();
         Balance balance = this.blockingStub.getBalance(balanceCheckRequest);
         System.out.println(
                 "Received : " + balance.getAmount()
         );
-        Assertions.assertEquals(50, balance.getAmount());
+        Assertions.assertEquals(70, balance.getAmount());
     }
 }
