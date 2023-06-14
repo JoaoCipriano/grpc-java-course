@@ -3,6 +3,7 @@ package com.pilgrim.client;
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
 import com.pilgrim.model.BankServiceGrpc;
+import com.pilgrim.model.WithdrawRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -33,5 +34,17 @@ class BankClientTest {
                 "Received : " + balance.getAmount()
         );
         Assertions.assertEquals(70, balance.getAmount());
+    }
+
+    @Test
+    void withdrawTest() {
+        var withdrawRequest = WithdrawRequest.newBuilder()
+                .setAccountNumber(7)
+                .setAmount(40)
+                .build();
+        Assertions.assertDoesNotThrow(
+                () -> this.blockingStub.withdraw(withdrawRequest)
+                        .forEachRemaining(money -> System.out.println("Received : " + money.getValue()))
+        );
     }
 }
