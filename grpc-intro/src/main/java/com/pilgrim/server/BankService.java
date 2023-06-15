@@ -3,6 +3,7 @@ package com.pilgrim.server;
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
 import com.pilgrim.model.BankServiceGrpc;
+import com.pilgrim.model.DepositRequest;
 import com.pilgrim.model.Money;
 import com.pilgrim.model.WithdrawRequest;
 import io.grpc.Status;
@@ -17,8 +18,6 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         Balance balance = Balance.newBuilder()
                 .setAmount(AccountDatabase.getBalance(accountNumber))
                 .build();
-        responseObserver.onNext(balance);
-        responseObserver.onNext(balance);
         responseObserver.onNext(balance);
         responseObserver.onCompleted();
     }
@@ -42,5 +41,10 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
             AccountDatabase.deductBalance(accountNumber, 10);
         }
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<DepositRequest> cashDeposit(StreamObserver<Balance> responseObserver) {
+        return super.cashDeposit(responseObserver);
     }
 }
