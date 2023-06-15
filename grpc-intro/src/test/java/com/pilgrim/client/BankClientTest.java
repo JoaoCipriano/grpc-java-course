@@ -1,5 +1,6 @@
 package com.pilgrim.client;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
 import com.pilgrim.model.BankServiceGrpc;
@@ -11,10 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.concurrent.TimeUnit;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BankClientTest {
 
     private BankServiceGrpc.BankServiceBlockingStub blockingStub;
+    private BankServiceGrpc.BankServiceStub bankServiceStub;
 
     @BeforeAll
     void setUp() {
@@ -22,6 +26,7 @@ class BankClientTest {
                 .usePlaintext()
                 .build();
         blockingStub = BankServiceGrpc.newBlockingStub(managedChannel);
+        bankServiceStub = BankServiceGrpc.newStub(managedChannel);
     }
 
     @Test
@@ -46,5 +51,17 @@ class BankClientTest {
                 () -> this.blockingStub.withdraw(withdrawRequest)
                         .forEachRemaining(money -> System.out.println("Received : " + money.getValue()))
         );
+    }
+
+    @Test
+    void withdrawAsyncTest() {
+        var withdrawRequest = WithdrawRequest.newBuilder()
+                .setAccountNumber(7)
+                .setAmount(40)
+                .build();
+        Assertions.assertDoesNotThrow(() -> {
+            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse());
+            Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+        });
     }
 }
