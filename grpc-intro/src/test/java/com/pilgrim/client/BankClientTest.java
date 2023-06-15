@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -55,13 +56,14 @@ class BankClientTest {
 
     @Test
     void withdrawAsyncTest() {
+        CountDownLatch latch = new CountDownLatch(1);
         var withdrawRequest = WithdrawRequest.newBuilder()
                 .setAccountNumber(7)
                 .setAmount(40)
                 .build();
         Assertions.assertDoesNotThrow(() -> {
-            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse());
-            Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
+            latch.await();
         });
     }
 }
