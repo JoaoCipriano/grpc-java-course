@@ -29,7 +29,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         int balance = AccountDatabase.getBalance(accountNumber);
 
         if (balance < amount) {
-            Status status = Status.FAILED_PRECONDITION.withDescription("No enough money. Yoy have only " + balance);
+            Status status = Status.FAILED_PRECONDITION.withDescription("No enough money. You have only " + balance);
             responseObserver.onError(status.asRuntimeException());
             return;
         }

@@ -46,7 +46,7 @@ class BankClientTest {
     void withdrawTest() {
         var withdrawRequest = WithdrawRequest.newBuilder()
                 .setAccountNumber(7)
-                .setAmount(40)
+                .setAmount(30)
                 .build();
         Assertions.assertDoesNotThrow(
                 () -> this.blockingStub.withdraw(withdrawRequest)
