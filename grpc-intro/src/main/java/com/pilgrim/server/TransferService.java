@@ -9,6 +9,6 @@ public class TransferService extends TransferServiceGrpc.TransferServiceImplBase
 
     @Override
     public StreamObserver<TransferRequest> transfer(StreamObserver<TransferResponse> responseObserver) {
-        return super.transfer(responseObserver);
+        return new TransferStreamingRequest(responseObserver);
     }
 }

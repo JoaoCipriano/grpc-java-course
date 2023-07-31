@@ -20,7 +20,7 @@ public class AccountDatabase {
             .boxed()
             .collect(Collectors.toMap(
                 Function.identity(),
-                v -> v * 10
+                v -> v * 100
             ));
 
     public static int getBalance(int accountId) {
