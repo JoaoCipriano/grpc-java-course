@@ -1,5 +1,6 @@
 package com.pilgrim.game.client;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.pilgrim.game.Die;
 import com.pilgrim.game.GameState;
 import com.pilgrim.game.Player;
@@ -8,6 +9,7 @@ import io.grpc.stub.StreamObserver;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class GameStateStreamingResponse implements StreamObserver<GameState> {
 
@@ -28,6 +30,7 @@ public class GameStateStreamingResponse implements StreamObserver<GameState> {
             System.out.println("Game Over!");
             this.dieStreamObserver.onCompleted();
         } else {
+            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
             this.roll();
         }
         System.out.println("----------------------------------");
@@ -47,7 +50,7 @@ public class GameStateStreamingResponse implements StreamObserver<GameState> {
         this.dieStreamObserver = streamObserver;
     }
 
-    private void roll() {
+    public void roll() {
         int dieValue = ThreadLocalRandom.current().nextInt(1, 7);
         Die die = Die.newBuilder().setValue(dieValue).build();
         this.dieStreamObserver.onNext(die);

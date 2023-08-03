@@ -5,6 +5,7 @@ import com.pilgrim.game.GameServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -25,11 +26,14 @@ class GameClientTest {
     }
 
     @Test
-    void clientGame() {
+    void clientGame() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        GameStateStreamingResponse gameStateStreamingResponse = new GameStateStreamingResponse(latch);
-        StreamObserver<Die> dieStreamObserver = this.stub.roll(gameStateStreamingResponse);
-        gameStateStreamingResponse.setDieStreamObserver(dieStreamObserver);
-        dieStreamObserver.onNext();
+        Assertions.assertDoesNotThrow(() -> {
+            GameStateStreamingResponse gameStateStreamingResponse = new GameStateStreamingResponse(latch);
+            StreamObserver<Die> dieStreamObserver = this.stub.roll(gameStateStreamingResponse);
+            gameStateStreamingResponse.setDieStreamObserver(dieStreamObserver);
+            gameStateStreamingResponse.roll();
+            latch.await();
+        });
     }
 }
