@@ -1,4 +1,4 @@
-package com.pilgrim.server;
+package com.pilgrim.server.rpctypes;
 
 import java.util.Map;
 import java.util.function.Function;

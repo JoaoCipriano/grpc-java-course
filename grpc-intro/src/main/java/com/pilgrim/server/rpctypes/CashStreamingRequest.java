@@ -1,4 +1,4 @@
-package com.pilgrim.server;
+package com.pilgrim.server.rpctypes;
 
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.DepositRequest;

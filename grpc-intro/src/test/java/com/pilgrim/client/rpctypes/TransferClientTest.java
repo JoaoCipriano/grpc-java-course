@@ -1,4 +1,4 @@
-package com.pilgrim.client;
+package com.pilgrim.client.rpctypes;
 
 import com.pilgrim.model.TransferRequest;
 import com.pilgrim.model.TransferServiceGrpc;

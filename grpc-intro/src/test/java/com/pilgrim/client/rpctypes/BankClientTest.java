@@ -1,4 +1,4 @@
-package com.pilgrim.client;
+package com.pilgrim.client.rpctypes;
 
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
@@ -23,22 +23,15 @@ class BankClientTest {
 
     @BeforeAll
     void setUp() {
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 7200)
+        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 6565)
                 .usePlaintext()
                 .build();
-        System.out.println(
-                "Channel is created"
-        );
         blockingStub = BankServiceGrpc.newBlockingStub(managedChannel);
         bankServiceStub = BankServiceGrpc.newStub(managedChannel);
-        System.out.println(
-                "Stubs are created"
-        );
     }
 
     @Test
-    void balanceTest() throws InterruptedException {
-        Thread.sleep(5000);
+    void balanceTest() {
         BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
                 .setAccountNumber(7)
                 .build();

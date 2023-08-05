@@ -1,4 +1,4 @@
-package com.pilgrim.server;
+package com.pilgrim.server.rpctypes;
 
 import com.pilgrim.model.TransferRequest;
 import com.pilgrim.model.TransferResponse;
