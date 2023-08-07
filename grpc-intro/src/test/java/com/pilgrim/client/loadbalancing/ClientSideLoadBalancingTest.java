@@ -35,6 +35,7 @@ class ClientSideLoadBalancingTest {
         ManagedChannel managedChannel = ManagedChannelBuilder
                 //.forAddress("localhost", 8585)
                 .forTarget("http://bank-service")
+                .defaultLoadBalancingPolicy("round_robin")
                 .usePlaintext()
                 .build();
         blockingStub = BankServiceGrpc.newBlockingStub(managedChannel);
