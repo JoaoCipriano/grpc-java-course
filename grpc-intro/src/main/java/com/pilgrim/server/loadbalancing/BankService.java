@@ -7,7 +7,6 @@ import com.pilgrim.model.DepositRequest;
 import com.pilgrim.model.Money;
 import com.pilgrim.model.WithdrawRequest;
 import com.pilgrim.server.rpctypes.AccountDatabase;
-import com.pilgrim.server.rpctypes.CashStreamingRequest;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
