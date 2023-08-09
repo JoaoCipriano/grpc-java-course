@@ -53,13 +53,19 @@ class DeadlineClientTest {
     @Test
     void withdrawTest() {
         var withdrawRequest = WithdrawRequest.newBuilder()
-                .setAccountNumber(7)
-                .setAmount(30)
+                .setAccountNumber(6)
+                .setAmount(50)
                 .build();
-        Assertions.assertDoesNotThrow(
-                () -> this.blockingStub.withdraw(withdrawRequest)
-                        .forEachRemaining(money -> System.out.println("Received : " + money.getValue()))
-        );
+
+        try {
+            this.blockingStub
+                    .withDeadline(Deadline.after(4, TimeUnit.SECONDS))
+                    .withdraw(withdrawRequest)
+                    .forEachRemaining(money -> System.out.println("Received : " + money.getValue()));
+
+        } catch (StatusRuntimeException exception) {
+            //
+        }
     }
 
     @Test
