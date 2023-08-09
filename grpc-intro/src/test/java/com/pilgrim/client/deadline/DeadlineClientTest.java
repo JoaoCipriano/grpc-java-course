@@ -1,21 +1,21 @@
 package com.pilgrim.client.deadline;
 
-import com.pilgrim.client.rpctypes.BalanceStreamObserver;
 import com.pilgrim.client.rpctypes.MoneyStreamingResponse;
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
 import com.pilgrim.model.BankServiceGrpc;
-import com.pilgrim.model.DepositRequest;
 import com.pilgrim.model.WithdrawRequest;
+import io.grpc.Deadline;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.stub.StreamObserver;
+import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeadlineClientTest {
@@ -37,11 +37,17 @@ class DeadlineClientTest {
         BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
                 .setAccountNumber(7)
                 .build();
-        Balance balance = this.blockingStub.getBalance(balanceCheckRequest);
-        System.out.println(
-                "Received : " + balance.getAmount()
-        );
-        Assertions.assertEquals(70, balance.getAmount());
+        try {
+            Balance balance = this.blockingStub
+                    .withDeadline(Deadline.after(2, TimeUnit.SECONDS))
+                    .getBalance(balanceCheckRequest);
+            System.out.println(
+                    "Received : " + balance.getAmount()
+            );
+            Assertions.assertEquals(700, balance.getAmount());
+        } catch (StatusRuntimeException exception) {
+            // go with default values
+        }
     }
 
     @Test

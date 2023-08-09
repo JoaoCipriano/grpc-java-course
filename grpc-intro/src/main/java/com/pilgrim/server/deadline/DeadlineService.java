@@ -1,5 +1,6 @@
 package com.pilgrim.server.deadline;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.pilgrim.model.Balance;
 import com.pilgrim.model.BalanceCheckRequest;
 import com.pilgrim.model.BankServiceGrpc;
@@ -10,6 +11,8 @@ import com.pilgrim.server.loadbalancing.CashStreamingRequest;
 import com.pilgrim.server.rpctypes.AccountDatabase;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+
+import java.util.concurrent.TimeUnit;
 
 public class DeadlineService extends BankServiceGrpc.BankServiceImplBase {
 
@@ -22,6 +25,8 @@ public class DeadlineService extends BankServiceGrpc.BankServiceImplBase {
         Balance balance = Balance.newBuilder()
                 .setAmount(AccountDatabase.getBalance(accountNumber))
                 .build();
+        //simulate time-consuming call
+        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
         responseObserver.onNext(balance);
         responseObserver.onCompleted();
     }
