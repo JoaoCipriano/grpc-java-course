@@ -7,12 +7,17 @@ import com.pilgrim.model.DepositRequest;
 import com.pilgrim.model.WithdrawRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext;
 import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import javax.net.ssl.SSLException;
+import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,9 +27,15 @@ class BankClientTest {
     private BankServiceGrpc.BankServiceStub bankServiceStub;
 
     @BeforeAll
-    void setUp() {
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 6565)
-                .usePlaintext()
+    void setUp() throws SSLException {
+
+        SslContext sslContext = GrpcSslContexts.forClient()
+                .trustManager(new File("C:\\Users\\USER\\dev\\git\\grpc-java-course\\ssl-tls\\ca.cert.pem"))
+                .build();
+
+        ManagedChannel managedChannel = NettyChannelBuilder.forAddress("localhost", 6565)
+//                .usePlaintext()
+                .sslContext(sslContext)
                 .build();
         blockingStub = BankServiceGrpc.newBlockingStub(managedChannel);
         bankServiceStub = BankServiceGrpc.newStub(managedChannel);
@@ -39,7 +50,7 @@ class BankClientTest {
         System.out.println(
                 "Received : " + balance.getAmount()
         );
-        Assertions.assertEquals(70, balance.getAmount());
+        Assertions.assertEquals(700, balance.getAmount());
     }
 
     @Test
@@ -61,10 +72,6 @@ class BankClientTest {
                 .setAccountNumber(7)
                 .setAmount(670)
                 .build();
-//        Assertions.assertDoesNotThrow(() -> {
-//            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
-//            latch.await();
-//        });
         this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
         latch.await();
     }
