@@ -59,6 +59,7 @@ class DeadlineClientTest {
 
         try {
             this.blockingStub
+                    .withDeadline(Deadline.after(2, TimeUnit.SECONDS))
                     .withdraw(withdrawRequest)
                     .forEachRemaining(money -> System.out.println("Received : " + money.getValue()));
 
