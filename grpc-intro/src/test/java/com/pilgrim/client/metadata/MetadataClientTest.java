@@ -48,7 +48,7 @@ class MetadataClientTest {
             );
             Assertions.assertEquals(700, balance.getAmount());
         } catch (StatusRuntimeException exception) {
-            // go with default values
+            exception.printStackTrace();
         }
     }
 

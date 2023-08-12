@@ -9,7 +9,7 @@ public class ClientConstants {
     static {
         METADATA.put(
                 Metadata.Key.of("client-token", Metadata.ASCII_STRING_MARSHALLER),
-                "bank-client-secret"
+                "bank-client-secre"
         );
     }
 
