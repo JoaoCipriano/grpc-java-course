@@ -55,16 +55,18 @@ class BankClientTest {
     }
 
     @Test
-    void withdrawAsyncTest() {
+    void withdrawAsyncTest() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         var withdrawRequest = WithdrawRequest.newBuilder()
                 .setAccountNumber(7)
-                .setAmount(40)
+                .setAmount(670)
                 .build();
-        Assertions.assertDoesNotThrow(() -> {
-            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
-            latch.await();
-        });
+//        Assertions.assertDoesNotThrow(() -> {
+//            this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
+//            latch.await();
+//        });
+        this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
+        latch.await();
     }
 
     @Test

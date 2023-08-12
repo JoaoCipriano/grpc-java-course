@@ -1,6 +1,10 @@
 package com.pilgrim.client.rpctypes;
 
+import com.pilgrim.client.metadata.ClientConstants;
 import com.pilgrim.model.Money;
+import com.pilgrim.model.WithdrawalError;
+import io.grpc.Metadata;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 import java.util.concurrent.CountDownLatch;
@@ -20,7 +24,11 @@ public class MoneyStreamingResponse implements StreamObserver<Money> {
 
     @Override
     public void onError(Throwable throwable) {
-        System.out.println(throwable.getMessage());
+        Metadata metadata = Status.trailersFromThrowable(throwable);
+        WithdrawalError withdrawalError = metadata.get(ClientConstants.WITHDRAWAL_ERROR_KEY);
+        System.out.println(
+                withdrawalError.getAmount() + ":" + withdrawalError.getErrorMessage()
+        );
         latch.countDown();
     }
 
