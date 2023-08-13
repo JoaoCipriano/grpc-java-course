@@ -24,7 +24,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         this.userRepository.findById(request.getLoginId())
                 .ifPresent(user -> {
                     builder.setName(user.getName())
-                            .setLoginId(user.getLoginId())
+                            .setLoginId(user.getLogin())
                             .setGenre(Genre.valueOf(user.getGenre()));
                 });
         responseObserver.onNext(builder.build());
@@ -39,7 +39,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                 .ifPresent(user -> {
                     user.setGenre(request.getGenre().toString());
                     builder.setName(user.getName())
-                            .setLoginId(user.getLoginId())
+                            .setLoginId(user.getLogin())
                             .setGenre(Genre.valueOf(user.getGenre()));
                 });
         responseObserver.onNext(builder.build());

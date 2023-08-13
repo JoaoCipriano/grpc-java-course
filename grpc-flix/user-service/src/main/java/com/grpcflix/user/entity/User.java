@@ -8,8 +8,10 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user")
 @Getter
 @Setter
 @ToString
@@ -18,7 +20,7 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    private String loginId;
+    private String login;
     private String name;
     private String genre;
 }
