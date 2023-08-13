@@ -1,17 +1,20 @@
 package com.grpcflix.aggregator.service;
 
 import com.grpcflix.aggregator.dto.RecommendedMovie;
+import com.grpcflix.aggregator.dto.UserGenre;
+import com.pilgrim.grpcflix.common.Genre;
 import com.pilgrim.grpcflix.movie.MovieSearchRequest;
-import com.pilgrim.grpcflix.movie.MovieSearchResponse;
 import com.pilgrim.grpcflix.movie.MovieServiceGrpc;
-import com.pilgrim.grpcflix.user.UserResponse;
+import com.pilgrim.grpcflix.user.UserGenreUpdateRequest;
 import com.pilgrim.grpcflix.user.UserSearchRequest;
 import com.pilgrim.grpcflix.user.UserServiceGrpc;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserMovieService {
 
@@ -30,5 +33,14 @@ public class UserMovieService {
                 .stream()
                 .map(movieDto -> new RecommendedMovie(movieDto.getTitle(), movieDto.getYear(), movieDto.getRating()))
                 .toList();
+    }
+
+    public void setUserGenre(UserGenre userGenre) {
+        var userGenreUpdateRequest = UserGenreUpdateRequest.newBuilder()
+                .setLoginId(userGenre.loginId())
+                .setGenre(Genre.valueOf(userGenre.genre().toUpperCase()))
+                .build();
+        var userResponse = this.userStub.updateUserGenre(userGenreUpdateRequest);
+        log.info(String.format("The %s genre has updated", userResponse.getName()));
     }
 }
