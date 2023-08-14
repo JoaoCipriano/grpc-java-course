@@ -5,4 +5,6 @@ grpc:
       negotiationType: plaintext
     movie-service:
       address: static://localhost:7575
-      negotiationType: plaintext
+      negotiationType: TLS
+      security:
+        trustCertCollection: file:C:\\Users\\USER\\dev\\git\\grpc-java-course\\ssl-tls\\ca.cert.pem
