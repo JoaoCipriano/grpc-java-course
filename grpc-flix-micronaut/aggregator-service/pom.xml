@@ -36,6 +36,12 @@
             <groupId>com.pilgrim</groupId>
             <artifactId>proto</artifactId>
             <version>0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micronaut.grpc</groupId>
+                    <artifactId>micronaut-grpc-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

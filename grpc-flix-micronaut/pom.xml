@@ -29,7 +29,6 @@
     <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.pilgrim.aot.generated</micronaut.aot.packageName>
-    <exec.mainClass>com.pilgrim.Application</exec.mainClass>
   </properties>
 
   <repositories>
