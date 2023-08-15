@@ -1,0 +1,10 @@
+grpc:
+  client:
+    max-retry-attempts: 10
+  channels:
+    user-service:
+      address: 'localhost:6565'
+      plaintext: true
+    movie-service:
+      address: 'localhost:7575'
+      plaintext: true
