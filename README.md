@@ -6,3 +6,4 @@
 * Examples for the 4 communication possibilities with gRPC (_Unary, Server streaming, Client streaming, Bi-directional streaming_);
 * How to configure SSL/TLS for gRPC communication;
 * Example project `grpc-flix` with Spring Boot;
+* Example project `grpc-flix-micronaut` with Micronaut;
