@@ -10,7 +10,7 @@
     <artifactId>user-service</artifactId>
 
     <properties>
-        <exec.mainClass>com.pilgrim.UserApplication</exec.mainClass>
+        <exec.mainClass>com.grpcflix.user.UserApplication</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -20,14 +20,18 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-hibernate-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut.grpc</groupId>
             <artifactId>micronaut-grpc-runtime</artifactId>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>io.micronaut.data</groupId>
-            <artifactId>micronaut-data-hibernate-jpa</artifactId>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-jackson</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

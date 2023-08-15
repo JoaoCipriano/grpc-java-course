@@ -26,11 +26,6 @@
             <artifactId>micronaut-serde-jackson</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.pilgrim</groupId>
