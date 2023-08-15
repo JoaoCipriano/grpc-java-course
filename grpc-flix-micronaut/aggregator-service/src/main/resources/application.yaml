@@ -5,6 +5,3 @@ grpc:
     user-service:
       address: 'localhost:6565'
       plaintext: true
-    movie-service:
-      address: 'localhost:7575'
-      plaintext: true
