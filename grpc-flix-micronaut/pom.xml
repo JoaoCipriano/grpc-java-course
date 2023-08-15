@@ -26,7 +26,6 @@
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
     <micronaut.version>4.0.3</micronaut.version>
-    <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.aot.packageName>com.pilgrim.aot.generated</micronaut.aot.packageName>
   </properties>

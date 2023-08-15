@@ -9,7 +9,16 @@
 
     <artifactId>user-service</artifactId>
 
+    <properties>
+        <exec.mainClass>com.pilgrim.UserApplication</exec.mainClass>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-discovery-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.micronaut.grpc</groupId>
             <artifactId>micronaut-grpc-runtime</artifactId>
